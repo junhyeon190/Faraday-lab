@@ -9,13 +9,13 @@ var InductionLab;
     function progress(text, title) { return `<span class="eyebrow">${text}</span><h2>${title}</h2>`; }
     function prompt(title, text) { return `<div class="paper-prompt"><strong>${title}</strong><p>${text}</p></div>`; }
     function pairPredictionView(state, records) {
-        return `${progress('학습지 2쪽 A 확인 → B · 약 2분', '세 조건을 먼저 예상해요')}
-      <div class="member-select" role="group" aria-label="함께하는 인원"><button data-members="2" aria-pressed="${state.members === 2}">2명</button><button data-members="3" aria-pressed="${state.members === 3}">3명</button><span>짝 번호를 정하세요.</span></div>
-      <p>A에서 배운 내용을 확인하고, B의 ‘내 예측’을 각자 쓰세요.</p>
+        return `${progress('학습지 2쪽 B · 약 1분', '세 조건을 먼저 예상해요')}
+
+      <p>A의 가설이 맞다면 어떨까요? B의 ‘내 예측’을 각자 쓰세요.</p>
       <ol class="condition-cards">${InductionLab.PAIR_CONDITIONS.map(c => `<li><strong>${c}</strong><span>코일은 고정</span></li>`).join('')}</ol>
       <p class="legend">○ 반응 있음 · × 보지 못함<br>? 모르거나 판단 어려움</p>
       ${memberChecks(state, '각자 세 칸을 모두 쓴 뒤, 자기 번호를 눌러요.', records)}
-      ${nextButton('모두 예측 완료 · 관찰로', InductionLab.allRecorded(state, records))}
+      ${nextButton('B 기록 완료 · 실험 계획으로', InductionLab.allRecorded(state, records))}
       <p class="paper-note">서로 다른 예측도 그대로 남겨요. 정지는 바늘이 안정된 뒤를 뜻해요.</p>`;
     }
     InductionLab.pairPredictionView = pairPredictionView;
@@ -30,26 +30,36 @@ var InductionLab;
       ${i === 1 && status === 'idle' ? '<p class="paper-note">자석을 먼 시작 위치로 준비했어요. 준비 이동은 관찰에 넣지 않아요.</p>' : ''}
       ${prompt(done ? 'B의 ‘가상 관찰’에 각자 기록' : '각자 기록할 준비', '○ / × / ?로 적고 짝과 비교해요. 다르게 보았다면 다시 관찰해요. 처음 예측은 지우지 않아요.')}
       ${memberChecks(state, done ? '기록을 마친 사람이 자기 번호를 눌러요.' : '끝까지 관찰하면 기록 확인을 할 수 있어요.', records, !done)}
-      ${nextButton(i === 2 ? '세 관찰을 모아 · 가설 쓰기' : '기록 완료 · 다음 짝이 조작', done && InductionLab.allRecorded(state, records))}`;
+      ${nextButton(i === 2 ? '관찰 기록 완료 · 실제 장치 준비' : '기록 완료 · 다음 짝이 조작', done && InductionLab.allRecorded(state, records))}`;
     }
     InductionLab.pairObservationView = pairObservationView;
     function pairHypothesisView(state, records) {
-        return `${progress('학습지 2쪽 C · 약 2분', '비교한 내용으로 가설을 써요')}
-      <p>B의 예측과 관찰을 비교해요. 어떤 두 조건이 설명의 근거가 될지 짝에게 말해 보세요.</p>
-      <div class="sentence-frame"><strong>① C에 가설 한 문장</strong><p>“자석과 코일이 ______하면,<br>전류가 생길 것이다.”</p><strong>② 그렇게 생각한 까닭</strong><p>“B의 ___번과 ___번에서<br>______을 관찰했기 때문이다.”</p></div>
+        return `${progress('학습지 2쪽 A · 약 3분', '과학사에서 나의 가설로')}
+      <div class="member-select" role="group" aria-label="함께하는 인원"><button data-members="2" aria-pressed="${state.members === 2}">2명</button><button data-members="3" aria-pressed="${state.members === 3}">3명</button><span>짝 번호를 정하세요.</span></div>
+      <p>외르스테드: 전류가 흐르는 도선 주위에는 자기장이 생겨요.</p>
+      <div class="sentence-frame"><strong>반대로, 자석으로 전류를 만들려면?</strong><p>“자석과 코일이 ______하면,<br>전류가 생길 것이다.”</p><p>“그렇게 생각한 까닭은 ______이다.”</p></div>
+      <p class="paper-note">조건과 까닭을 각자 쓰고 짝에게 설명해요. 서로 다른 가설도 그대로 남겨요.</p>
       ${memberChecks(state, '가설과 까닭을 쓰고 서로 설명했나요?', records)}
-      ${nextButton('C 기록 완료 · 새 조건 예상', InductionLab.allRecorded(state, records))}
-      <p class="paper-note">이 가설을 실제 실험으로 확인해요.</p>`;
+      ${nextButton('A 기록 완료 · 내 가설로 예측', InductionLab.allRecorded(state, records))}`;
     }
     InductionLab.pairHypothesisView = pairHypothesisView;
-    function pairTransferView(state, records) {
-        return `${progress('학습지 3쪽 D → E의 내 예측 · 약 2분', '이번에는 자석을 고정해요')}
-      <p>C의 가설대로라면 코일을 움직일 때는 어떨까요?</p>
+    function pairPlanView(state, records) {
+        return `${progress('학습지 2쪽 C · 약 2분', '무엇을 비교해 볼까요?')}
+      <p>A의 가설대로라면 자석을 고정하고 코일을 움직일 때는 어떨까요?</p>
       <ol class="condition-cards"><li><strong>④ 코일도 정지</strong></li><li><strong>⑤ 코일이 가까워짐</strong></li><li><strong>⑥ 코일이 멀어짐</strong></li></ol>
-      ${prompt('실제 조작 전에', 'E의 ④~⑥ ‘내 예측’을 ○ / × / ?로 쓰고, 까닭을 차례로 말해요.')}
-      ${memberChecks(state, '세 예측과 짝 설명을 각자 마쳤나요?', records)}
-      ${nextButton('예측 완료 · 실제 장치로', InductionLab.allRecorded(state, records))}
-      <p class="paper-note">이 세 조건은 교실의 실제 장치로 확인해요.</p>`;
+      ${prompt('빠르기 비교도 먼저 예상해요', '같은 자석을 같은 구간에서 느리게·빠르게 넣으면, 바늘이 가장 크게 흔들린 폭은 어떨까요?')}
+      <p>같게 둘 조건 한 가지도 C에 적어요.</p>
+      ${memberChecks(state, 'C의 예측과 비교 계획을 각자 기록했나요?', records)}
+      ${nextButton('계획 완료 · 세 조건 가상 관찰', InductionLab.allRecorded(state, records))}`;
+    }
+    InductionLab.pairPlanView = pairPlanView;
+    function pairTransferView(state, records) {
+        return `${progress('학습지 3쪽 D · 약 2분', '처음 가설을 실제로 검증해요')}
+      <p>가상 관찰은 B에 남겨요. A의 가설은 그대로 두고 실제 실험으로 확인해요.</p>
+      <ol class="practical-rules"><li>D의 그림대로 코일과 검류계를 연결해요.</li><li>같은 극·기울기·경로를 유지해요.</li><li>한 조건을 두 번 관찰한 뒤 조작자를 바꿔요.</li></ol>
+      ${prompt('검류계는 자석에서 떨어뜨려요', '바늘을 직접 끌어당기거나 계기를 흔들지 않도록 배치해요.')}
+      ${memberChecks(state, '기구와 역할을 함께 확인했나요?', records)}
+      ${nextButton('준비 완료 · 실제 장치로', InductionLab.allRecorded(state, records))}`;
     }
     InductionLab.pairTransferView = pairTransferView;
 })(InductionLab || (InductionLab = {}));
