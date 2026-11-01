@@ -34,7 +34,9 @@ var InductionLab;
     function pairFinishView() {
         return `<span class="eyebrow">짝 탐구 마침</span><h2>우리의 기록을 가지고 모여요</h2>
       <ol class="practical-rules"><li>조작을 멈추고 기구를 정리해요.</li><li>선생님의 설명과 우리 기록을 연결해요.</li><li>안내에 따라 1쪽 패러데이, 4쪽 G로 이어가요.</li></ol>
-      <div class="paper-prompt"><strong>생각의 변화도 탐구의 기록이에요.</strong><p>B의 처음 예측, A의 가설, F의 판단을 모두 남겨 주세요.</p></div>`;
+      <div class="paper-prompt"><strong>생각의 변화도 탐구의 기록이에요.</strong><p>B의 처음 예측, A의 가설, F의 판단을 모두 남겨 주세요.</p></div>
+      ${InductionLab.actionButton('history', '패러데이와 과학의 본성 읽기', 'primary')}
+      <p class="paper-note">실험을 마친 지금, 우리의 탐구를 패러데이의 삶과 발견에 연결해 봐요. 자세한 이야기는 펼쳐 읽을 수 있어요.</p>`;
     }
     InductionLab.pairFinishView = pairFinishView;
 })(InductionLab || (InductionLab = {}));

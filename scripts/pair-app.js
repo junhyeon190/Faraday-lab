@@ -15,7 +15,7 @@ var InductionLab;
     function readingVisible() { return !fault && state.stage === 'observe' && player.status !== 'idle'; }
     function position(id, p, dy = 0) { const xy = scene.renderer.project(p); InductionLab.el(id).style.left = `${xy.x}px`; InductionLab.el(id).style.top = `${xy.y + dy}px`; }
     function draw() {
-        if (fault || !scene)
+        if (fault || !scene || state.stage === 'history')
             return;
         const actual = ['transfer', 'practical', 'judge', 'finish'].includes(state.stage), mode = actual ? 'coil' : 'magnet';
         apparatus.fixStep = actual ? 2 : 0;
@@ -36,19 +36,23 @@ var InductionLab;
             InductionLab.el('motionPhase').textContent = '관찰 완료 · 각자 B에 기록';
     }
     function renderPanel() {
-        const views = { plan: () => InductionLab.pairPlanView(state, records), speed: () => InductionLab.pairSpeedView(state, records), predict: () => InductionLab.pairPredictionView(state, records), observe: () => InductionLab.pairObservationView(state, player.status, records), hypothesis: () => InductionLab.pairHypothesisView(state, records), transfer: () => InductionLab.pairTransferView(state, records), practical: () => InductionLab.pairPracticalView(state, records), judge: () => InductionLab.pairJudgmentView(state, records), finish: InductionLab.pairFinishView };
+        const views = { plan: () => InductionLab.pairPlanView(state, records), speed: () => InductionLab.pairSpeedView(state, records), predict: () => InductionLab.pairPredictionView(state, records), observe: () => InductionLab.pairObservationView(state, player.status, records), hypothesis: () => InductionLab.pairHypothesisView(state, records), transfer: () => InductionLab.pairTransferView(state, records), practical: () => InductionLab.pairPracticalView(state, records), judge: () => InductionLab.pairJudgmentView(state, records), finish: InductionLab.pairFinishView, history: () => '' };
         InductionLab.el('flowPanel').innerHTML = views[state.stage]();
     }
     function render() {
+        const history = state.stage === 'history';
+        InductionLab.el('experimentLayout').hidden = history;
+        InductionLab.el('historyReader').hidden = !history;
+        InductionLab.el('historyReader').innerHTML = history ? InductionLab.pairHistoryView() : '';
         renderPanel();
-        const titles = { plan: '같은 가설로 실제 조건 예상하기', speed: '같은 구간 · 느리게와 빠르게 비교', predict: '코일은 고정 · 자석의 세 조건', observe: '코일은 고정 · 자석의 상태 바꾸기', hypothesis: '외르스테드의 발견에서 새로운 질문으로', transfer: '실제 장치 연결·역할 확인', practical: '교실의 장치로 직접 확인하기', judge: '실제 관찰로 내 가설 판단하기', finish: '기록을 가지고 전체 수업으로' };
-        const labels = { plan: '2.2 C · 비교 계획', speed: '2.4 E-2 · 빠르기 비교', predict: '2.2 B · 나의 예측', observe: '2.3 B · 짝과 가상 관찰', hypothesis: '2.1 A · 첫 가설', transfer: '2.4 D · 실제 장치 준비', practical: '2.4 E · 실제 실험', judge: '2.5 F · 가설 판단', finish: '3 · 정리로 연결' };
+        const titles = { plan: '같은 가설로 실제 조건 예상하기', speed: '같은 구간 · 느리게와 빠르게 비교', predict: '코일은 고정 · 자석의 세 조건', observe: '코일은 고정 · 자석의 상태 바꾸기', hypothesis: '외르스테드의 발견에서 새로운 질문으로', transfer: '실제 장치 연결·역할 확인', practical: '교실의 장치로 직접 확인하기', judge: '실제 관찰로 내 가설 판단하기', finish: '기록을 가지고 전체 수업으로', history: '패러데이와 과학의 본성' };
+        const labels = { plan: '2.2 C · 비교 계획', speed: '2.4 E-2 · 빠르기 비교', predict: '2.2 B · 나의 예측', observe: '2.3 B · 짝과 가상 관찰', hypothesis: '2.1 A · 첫 가설', transfer: '2.4 D · 실제 장치 준비', practical: '2.4 E · 실제 실험', judge: '2.5 F · 가설 판단', finish: '3 · 정리로 연결', history: '3 · 과학사로 정리' };
         InductionLab.el('experimentTitle').textContent = titles[state.stage];
         InductionLab.el('modeLabel').textContent = labels[state.stage];
         InductionLab.el('experimentBadge').textContent = state.stage === 'observe' ? `${state.condition + 1} / 3 조건` : `${state.members}명 함께`;
         InductionLab.el('instrumentLock').textContent = state.stage === 'predict' ? '각자 B의 세 예측을 먼저 기록해요.' : state.stage === 'observe' ? '‘이 조건 관찰하기’를 누르면 검류계를 볼 수 있어요.' : state.stage === 'hypothesis' ? 'A에 가설과 까닭을 먼저 기록해요.' : state.stage === 'plan' ? 'C에 예측과 비교 계획을 먼저 기록해요.' : '실제 장치의 바늘 반응은 E에 새로 기록해요.';
         InductionLab.el('experimentHint').textContent = state.stage === 'observe' ? '같은 극·기울기·직선 경로 · 오른쪽 버튼으로 관찰' : state.stage === 'speed' ? '코일 고정 · 같은 구간에서 자석 넣기' : state.stage === 'transfer' || state.stage === 'practical' ? '④~⑥ 자석 고정 배치 예시 · ①~③은 코일 고정' : '전지 없는 회로 · 같은 자석과 코일';
-        const nav = ['transfer', 'practical', 'speed', 'judge', 'finish'].includes(state.stage) ? 'transfer' : state.stage === 'plan' ? 'predict' : state.stage;
+        const nav = ['finish', 'history'].includes(state.stage) ? 'history' : ['transfer', 'practical', 'speed', 'judge'].includes(state.stage) ? 'transfer' : state.stage === 'plan' ? 'predict' : state.stage;
         document.querySelectorAll('[data-phase]').forEach(x => { if (x.dataset.phase === nav)
             x.setAttribute('aria-current', 'step');
         else
@@ -71,6 +75,11 @@ var InductionLab;
         records = Array.from({ length: state.members }, () => false);
         prepare();
         render();
+        window.scrollTo(0, 0);
+        if (state.stage === 'history') {
+            InductionLab.el('historyTitle').focus({ preventScroll: true });
+            return;
+        }
         InductionLab.el('flowPanel').closest('.flow-guide')?.scrollTo(0, 0);
         InductionLab.el('flowPanel').focus({ preventScroll: true });
     }
@@ -84,6 +93,10 @@ var InductionLab;
     function act(action) {
         if (fault)
             return;
+        if (action === 'history' || action === 'return') {
+            go({ type: action });
+            return;
+        }
         if (action === 'advance' && (state.stage !== 'observe' || player.status === 'done'))
             go({ type: 'advance', records });
         if (state.stage !== 'observe')
@@ -118,6 +131,11 @@ var InductionLab;
             if (b.dataset.members)
                 go({ type: 'members', count: b.dataset.members === '3' ? 3 : 2 });
             else
+                act(b.dataset.action || '');
+        });
+        InductionLab.el('historyReader').addEventListener('click', e => {
+            const b = e.target.closest('button[data-action]');
+            if (b && !b.disabled)
                 act(b.dataset.action || '');
         });
         InductionLab.el('flowPanel').addEventListener('change', e => {

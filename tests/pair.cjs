@@ -5,13 +5,16 @@ const L=ctx.InductionLab,checks=[];
 function check(name,fn){fn();checks.push({name,pass:true});}
 for(const count of [2,3]){
  let s=L.pairTransition(L.freshPair(),{type:'members',count});const full=Array(count).fill(true),partial=Array(count).fill(false);partial[0]=true;
+ check(`${count}인 첫 화면 과학사 우회 차단`,()=>assert.equal(L.pairTransition(s,{type:'history'}),s));
  check(`${count}인 가설 미완료 차단`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:partial}),s));
  for(const stage of ['predict','plan','observe']){
+  check(`${count}인 ${s.stage} 과학사 우회 차단`,()=>assert.equal(L.pairTransition(s,{type:'history'}),s));
   check(`${count}인 ${stage} 전 미완료 차단`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:partial}),s));
   s=L.pairTransition(s,{type:'advance',records:full});
   check(`${count}인 ${stage} 순서`,()=>assert.equal(s.stage,stage));
  }
  for(let i=0;i<3;i++){
+  check(`${count}인 가상 관찰${i+1} 과학사 우회 차단`,()=>assert.equal(L.pairTransition(s,{type:'history'}),s));
   check(`${count}인 조건${i+1} 재생 전 차단`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:full}),s));
   check(`${count}인 조건${i+1} 역할 교대`,()=>assert.equal(L.pairOperator(s),i%count+1));
   s=L.pairTransition(s,{type:'observed'});
@@ -21,9 +24,19 @@ for(const count of [2,3]){
  }
  check(`${count}인 세 관찰 뒤 가설 수정 없이 실제 준비`,()=>assert.equal(s.stage,'transfer'));
  for(const stage of ['practical','speed','judge','finish']){
+  check(`${count}인 ${s.stage} 과학사 우회 차단`,()=>assert.equal(L.pairTransition(s,{type:'history'}),s));
   check(`${count}인 ${stage} 전 기록 확인`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:partial}),s));
   s=L.pairTransition(s,{type:'advance',records:full});check(`${count}인 ${stage} 순서`,()=>assert.equal(s.stage,stage));
  }
+ s=L.pairTransition(s,{type:'history'});
+ check(`${count}인 F 완료 뒤 읽기 자료`,()=>assert.equal(s.stage,'history'));
+ check(`${count}인 읽기 자료에서 진행 우회 없음`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:full}),s));
+ s=L.pairTransition(s,{type:'return'});
+ check(`${count}인 읽기 자료에서 마무리 복귀`,()=>assert.equal(s.stage,'finish'));
+ s=L.pairTransition(s,{type:'history'});
+ check(`${count}인 읽기 자료 재진입`,()=>assert.equal(s.stage,'history'));
+ const reset=L.pairTransition(s,{type:'reset'});
+ check(`${count}인 읽기 자료 초기화 뒤 공개 차단`,()=>assert.equal(L.pairTransition(reset,{type:'history'}),reset));
  check(`${count}인 초기화`,()=>assert.equal(L.pairTransition(s,{type:'reset'}).stage,'hypothesis'));
 }
 const trials=L.buildTeacherTrials();

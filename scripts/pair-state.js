@@ -9,6 +9,11 @@ var InductionLab;
     function pairTransition(state, action) {
         if (action.type === 'reset')
             return freshPair();
+        // 실제 증거로 가설을 판단한 뒤에만 발견 조건과 해설을 공개한다.
+        if (action.type === 'history')
+            return state.stage === 'finish' ? { ...state, stage: 'history' } : state;
+        if (action.type === 'return')
+            return state.stage === 'history' ? { ...state, stage: 'finish' } : state;
         if (action.type === 'members' && state.stage === 'hypothesis')
             return { ...state, members: action.count };
         if (action.type === 'observed' && state.stage === 'observe')
