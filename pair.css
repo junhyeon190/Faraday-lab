@@ -1,0 +1,76 @@
+.pair-page .experiment-layout{grid-template-columns:minmax(0,1fr) 398px}
+.pair-page .topbar{gap:18px;padding:0 28px}
+.pair-page .journey{gap:16px;font-size:16px}
+.pair-page .header-actions{display:flex;gap:10px;align-items:center}
+.pair-page .header-actions button{padding:8px 14px}
+.pair-page .flow-guide{max-height:calc(100vh - 152px);padding:20px}
+.pair-page .flow-guide h2{font-size:25px;line-height:1.3;word-break:keep-all}
+.pair-page .flow-guide p{font-size:17px;line-height:1.5}
+.pair-page .flow-guide .primary{min-height:52px;font-size:18px;padding:10px 12px}
+.pair-page .flow-guide .secondary{min-height:48px;font-size:18px;width:100%}
+.paper-conditions{padding-left:25px;margin:16px 0;display:grid;gap:10px;font-size:17px;line-height:1.5}
+.teacher-checks{border-top:1px solid #45586e;padding-top:13px;margin-top:16px}
+.teacher-checks strong{font-size:16px;color:#efc36c}
+.paper-check{display:flex;gap:10px;align-items:center;min-height:48px;margin:8px 0;cursor:pointer;font-size:16px;line-height:1.45}
+.paper-check input{width:24px;height:24px;flex:0 0 24px;accent-color:#efc36c;cursor:pointer;margin:0 4px}
+.paper-check:focus-within{outline:2px solid #e5c27c;outline-offset:2px;border-radius:6px}
+.pair-page .flow-guide .paper-note{font-size:16px;color:#aabfce;margin-top:15px}
+.paper-prompt{background:#24374b;border-radius:10px;padding:15px;margin:16px 0;line-height:1.5}
+.paper-prompt strong{font-size:18px;color:#f1d394}
+.paper-prompt p{margin-top:9px}
+.condition-progress{border-top:1px solid #45586e;margin:18px 0 14px;padding-top:14px;font-size:17px;color:#d4e0e8}
+.decision-words{padding:14px 12px;margin:17px 0;background:#243e43;border:1px solid #4c7878;border-radius:9px;color:#e0eeea;font-size:21px;font-weight:700;text-align:center}
+.pair-page .instrument{height:160px}
+.pair-page .instrument #gauge{max-height:139px}
+.pair-page .experiment-layout .viewport{height:370px;min-height:330px}
+.motion-phase{position:absolute;top:16px;right:16px;background:#fff4d6;color:#52431e;border:1px solid #c8af75;border-radius:9px;padding:10px 12px;font-size:16px}
+#flowPanel:focus{outline:none}
+@media(max-height:790px) and (min-width:1051px){.pair-page .experiment-layout .viewport{height:330px;min-height:330px}.pair-page .flow-guide{max-height:600px}.pair-page .instrument{height:154px}}
+@media(max-width:1180px){.pair-page .journey{gap:9px}.pair-page .header-actions .back-link{display:none}.pair-page .experiment-layout{grid-template-columns:minmax(0,1fr) 360px}}
+@media(max-width:740px){.pair-page .experiment-layout{grid-template-columns:1fr}.pair-page .flow-guide{max-height:none}.motion-phase{top:75px;right:10px}.pair-page .experiment-layout .viewport{height:400px}.pair-page .topbar{padding:0 15px}.pair-page footer{font-size:16px}}
+
+.worksheet-conditions{list-style:none;padding-left:0}
+.pair-page .instrument-lock{white-space:pre-line;line-height:1.6}
+.pair-page .experiment-layout{grid-template-columns:minmax(0,1fr) 430px}
+.pair-page .flow-guide{padding:18px;max-height:calc(100vh - 132px)}
+.pair-page .flow-guide p{font-size:16px;line-height:1.45}
+.pair-page .flow-guide h2{font-size:24px;margin:7px 0 12px}
+.pair-page .paper-note{margin-top:12px;font-size:16px}
+.pair-page .paper-prompt{padding:12px;margin:12px 0}
+.pair-page .paper-prompt p{margin-top:6px}
+.pair-page .paper-check{margin:3px 0;min-height:44px}
+.pair-page .flow-guide .primary{min-height:48px;margin-top:10px}
+.pair-checks{border-top:1px solid #45586e;margin-top:12px;padding-top:10px}
+.pair-checks p{color:#efc36c;margin-bottom:5px}
+.member-select{display:flex;align-items:center;gap:8px;margin:10px 0 14px;font-size:16px}
+.member-select button{min-width:48px;min-height:44px;border:1px solid #718698;border-radius:8px;background:#24394f;font-size:16px;color:#fff}
+.member-select button[aria-pressed=true]{background:#f0ce87;color:#18283b;border-color:#f0ce87;font-weight:700}
+.condition-cards{list-style:none;display:grid;gap:6px;margin:12px 0;padding:0}
+.condition-cards li{padding:9px 12px;border:1px solid #455d74;border-radius:8px;font-size:17px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.condition-cards span{font-size:16px;color:#c3cfdb;white-space:nowrap}
+.role-strip{padding:10px 12px;border:1px solid #72988e;background:#223f3b;color:#e5f3eb;border-radius:8px;font-size:17px;margin:12px 0}
+.sentence-frame{background:#24374b;border-left:3px solid #efc36c;border-radius:6px;padding:12px;margin:14px 0;font-size:17px;line-height:1.55}
+.sentence-frame p{margin:8px 0 12px}.sentence-frame p:last-child{margin-bottom:0}
+.practical-rules{padding-left:23px;display:grid;gap:9px;font-size:16px;line-height:1.5;margin:14px 0}
+.role-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px;line-height:1.4}
+.role-table caption{text-align:left;font-weight:700;margin-bottom:8px;color:#efc36c}
+.role-table td,.role-table th{border:1px solid #45586e;padding:5px 10px;text-align:left}
+.role-table th{background:#24394f}
+.pair-page dialog{max-width:480px;width:90%;padding:24px;background:#18283b;color:#fff;border:1px solid #718698;border-radius:14px}
+.pair-page dialog::backdrop{background:#0009}.pair-page dialog h2{font-size:23px;margin-bottom:16px}.pair-page dialog p{line-height:1.6;font-size:16px}
+.dialog-actions{display:flex;gap:12px;margin-top:24px}.dialog-actions button{min-height:48px;flex:1;font-size:16px}
+.pair-page footer{font-size:16px}
+@media(max-width:1180px){.pair-page .experiment-layout{grid-template-columns:minmax(0,1fr) 390px}.pair-page .journey{gap:9px}}
+@media(max-width:740px){.pair-page .experiment-layout{grid-template-columns:1fr}.pair-page .flow-guide{max-height:none}}
+.pair-checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:4px 8px}
+.pair-checks p{grid-column:1/-1}
+.pair-page .paper-check{gap:4px;white-space:nowrap}
+.role-table td,.role-table th{padding:8px 5px;white-space:nowrap}
+.pair-page .flow-guide{max-height:calc(100vh - 152px)}
+@media(max-width:740px){.pair-page .flow-guide{max-height:none}}
+.role-table td,.role-table th{padding:5px}
+.pair-page .practical-rules{margin:10px 0;gap:7px}
+.pair-page .notice{margin:10px 0;padding:10px}
+.pair-page .role-table{margin:8px 0}
+.pair-page .role-table caption{margin-bottom:4px}
+.pair-page .practical-rules{gap:5px}
