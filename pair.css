@@ -1,8 +1,8 @@
 .pair-page .experiment-layout{grid-template-columns:minmax(0,1fr) 398px}
 .pair-page .topbar{gap:18px;padding:0 28px}
 .pair-page .journey{gap:16px;font-size:16px}
-.pair-page .header-actions{display:flex;gap:10px;align-items:center}
-.pair-page .header-actions button{padding:8px 14px}
+.pair-page .header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.pair-page .header-actions button{padding:10px 12px;min-height:46px;font-size:16px;white-space:nowrap}
 .pair-page .flow-guide{max-height:calc(100vh - 152px);padding:20px}
 .pair-page .flow-guide h2{font-size:25px;line-height:1.3;word-break:keep-all}
 .pair-page .flow-guide p{font-size:17px;line-height:1.5}
@@ -83,3 +83,8 @@
 .topic-lead{display:block;font-size:18px;font-weight:550;letter-spacing:-.02em;margin-bottom:3px}
 .topic-main{display:block;font-size:27px;letter-spacing:-.03em}
 @media(max-width:740px){.pair-page .topbar{height:auto;min-height:104px;padding-top:12px;padding-bottom:12px}.pair-page .brand{flex-shrink:1}.topic-lead{font-size:16px}.topic-main{font-size:23px}.pair-page .brand .eyebrow{font-size:16px;letter-spacing:0}}
+
+/* 단계 이동 버튼은 제목 및 진행 표시와 줄이 겹치지 않게 배치한다. */
+.pair-page .journey span{white-space:nowrap}
+@media(max-width:1200px){.pair-page .topbar{flex-wrap:wrap;height:auto;min-height:104px;padding-top:12px;padding-bottom:12px}.pair-page .journey{order:3;flex-basis:100%;justify-content:center}}
+@media(max-width:740px){.pair-page .header-actions{margin-left:auto}.pair-page .header-actions button{min-height:48px}}

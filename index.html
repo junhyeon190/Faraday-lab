@@ -25,7 +25,7 @@
 <script defer src="scripts/pair-app.js"></script>
 </head>
 <body class="experiment-page pair-page">
-<header class="topbar"><div class="brand"><span class="brand-icon" aria-hidden="true">∩</span><div><span class="eyebrow">상모고 과학 실험실 · 짝 탐구</span><h1><span class="topic-lead">과학사와 실험으로 탐구하는 </span><span class="topic-main">전자기 유도의 발견</span></h1></div></div><nav class="journey" aria-label="수업 순서"><span data-phase="hypothesis">① 첫 가설</span><span data-phase="predict">② 예측·계획</span><span data-phase="observe">③ 가상 관찰</span><span data-phase="transfer">④ 실제 검증</span><span data-phase="history">⑤ 과학사 정리</span></nav><div class="header-actions"><button id="newClass" class="secondary" type="button">처음으로</button></div></header>
+<header class="topbar"><div class="brand"><span class="brand-icon" aria-hidden="true">∩</span><div><span class="eyebrow">상모고 과학 실험실 · 짝 탐구</span><h1><span class="topic-lead">과학사와 실험으로 탐구하는 </span><span class="topic-main">전자기 유도의 발견</span></h1></div></div><nav class="journey" aria-label="수업 순서"><span data-phase="hypothesis">① 첫 가설</span><span data-phase="predict">② 예측·계획</span><span data-phase="observe">③ 가상 관찰</span><span data-phase="transfer">④ 실제 검증</span><span data-phase="history">⑤ 과학사 정리</span></nav><div class="header-actions"><button id="previousStep" class="secondary" type="button" disabled>← 이전 단계</button><button id="nextStep" class="primary" type="button" disabled>다음 단계 →</button></div></header>
 <main class="experiment-layout" id="experimentLayout">
 <section class="workbench" aria-labelledby="experimentTitle">
 <div class="bench-heading"><div><span class="eyebrow" id="modeLabel">장치 준비</span><h2 id="experimentTitle">자석과 코일 · 관찰 전</h2></div><span class="stage-badge" id="experimentBadge">종이 기록</span></div>
@@ -42,6 +42,5 @@
 </main>
 <main class="history-layout" id="historyReader" aria-labelledby="historyTitle" hidden></main>
 <footer><span>모형 실험 · 실제 관찰과 구분하여 기록하세요.</span><span>한 기기로 함께 · 기록은 각자 종이에</span></footer>
-<dialog id="resetDialog"><h2>첫 가설 확인부터 다시 시작할까요?</h2><p>화면의 진행 표시만 초기화해요. 종이의 기록은 그대로 두세요.</p><div class="dialog-actions"><button id="cancelReset" class="secondary">계속 탐구하기</button><button id="confirmReset" class="primary">처음부터 시작</button></div></dialog>
 <noscript><div class="noscript">자바스크립트를 허용한 뒤 다시 열어 주세요.</div></noscript>
 </body></html>

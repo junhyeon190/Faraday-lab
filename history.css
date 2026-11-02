@@ -61,3 +61,15 @@
 @media(max-width:1280px){.pair-page .topbar{padding:0 22px;gap:14px}.pair-page .journey{gap:10px}}
 @media(max-width:1040px){.pair-page .journey{display:none}.history-hero{gap:24px}.history-core-grid{gap:16px}.history-core-grid>div+div{padding-left:16px}}
 @media(max-width:740px){.pair-page .history-layout{padding:18px 14px 0}.history-toolbar{align-items:flex-start;flex-direction:column}.history-hero{padding:26px 22px;grid-template-columns:1fr}.history-hero h2{font-size:34px}.history-hero figure{display:none}.history-core{padding:24px}.history-core-grid{grid-template-columns:1fr;gap:18px}.history-core-grid>div+div{border-left:0;border-top:1px solid #c0cdc2;padding:16px 0 0}.history-reading{padding:22px 16px}.history-section summary{padding:14px 12px;gap:8px}.history-section summary strong{font-size:19px}.history-body{padding:20px 18px;font-size:17px}.history-table{min-width:580px}.history-bottom{align-items:flex-start;flex-direction:column}.history-closing{padding:22px}.history-closing h3{font-size:23px}}
+
+/* 세 가지 핵심 이야기를 수업 마무리 화면에서 함께 읽는다. */
+.history-hero{padding:20px 32px;grid-template-columns:minmax(0,1fr) 148px;gap:24px}
+.history-hero h2{font-size:32px;margin:6px 0 10px}
+.history-hero img{width:82px}
+.history-hero figcaption{margin-top:6px}
+.history-core{padding:20px 32px 24px}
+.history-core h3{font-size:21px;margin-bottom:14px}
+.history-class-link{padding:18px 32px;background:#e7ede1;border-bottom:1px solid #c8d3c9}
+.history-class-link strong{font-size:18px;color:#304c32}
+.history-class-link p{font-size:16px;line-height:1.65;margin:5px 0 0;word-break:keep-all}
+@media(max-width:740px){.history-hero{padding:24px;grid-template-columns:1fr}.history-hero h2{font-size:28px}.history-core,.history-class-link{padding:22px 24px}}

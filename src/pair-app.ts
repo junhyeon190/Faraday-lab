@@ -27,6 +27,15 @@ namespace InductionLab {
   function renderPanel():void{
     const views:Record<PairStage,()=>string>={plan:()=>pairPlanView(state,records),speed:()=>pairSpeedView(state,records),predict:()=>pairPredictionView(state,records),observe:()=>pairObservationView(state,player.status,records),hypothesis:()=>pairHypothesisView(state,records),transfer:()=>pairTransferView(state,records),practical:()=>pairPracticalView(state,records),judge:()=>pairJudgmentView(state,records),finish:pairFinishView,history:()=>''};
     el('flowPanel').innerHTML=views[state.stage]();
+    renderNavigation();
+  }
+  function renderNavigation():void{
+    const previous=el<HTMLButtonElement>('previousStep'),next=el<HTMLButtonElement>('nextStep');
+    previous.disabled=fault||state.stage==='hypothesis';
+    next.disabled=fault||!canPairAdvance(state,records);
+    previous.title=state.stage==='hypothesis'?'첫 단계입니다.':'확인한 기록을 유지하고 이전 단계로 이동해요.';
+    next.title=state.stage==='history'?'마지막 단계입니다.':next.disabled?'현재 단계의 관찰과 각자의 기록 확인을 마쳐 주세요.':state.stage==='finish'?'패러데이와 과학의 본성 읽기로 이동해요.':'다음 단계로 이동해요.';
+    document.querySelectorAll<HTMLButtonElement>('#flowPanel [data-action="advance"]').forEach(b=>b.disabled=next.disabled);
   }
   function render():void{
     const history=state.stage==='history';
@@ -51,19 +60,20 @@ namespace InductionLab {
   }
   function go(action:PairAction):void{
     const next=pairTransition(state,action);if(next===state)return;
-    state=next;records=Array.from({length:state.members},()=>false);prepare();render();
+    state=next;records=pairRecords(state);prepare();render();
     window.scrollTo(0,0);
     if(state.stage==='history'){el('historyTitle').focus({preventScroll:true});return;}
     el('flowPanel').closest<HTMLElement>('.flow-guide')?.scrollTo(0,0);el('flowPanel').focus({preventScroll:true});
   }
   function play():void{
     if(fault||state.stage!=='observe'||!['idle','done'].includes(player.status))return;
-    state=pairTransition(state,{type:'replay'});records=Array.from({length:state.members},()=>false);player.play();
+    state=pairTransition(state,{type:'replay'});records=pairRecords(state);player.play();
   }
   function act(action:string):void{
     if(fault)return;
     if(action==='history'||action==='return'){go({type:action});return;}
-    if(action==='advance'&&(state.stage!=='observe'||player.status==='done'))go({type:'advance',records});
+    if(action==='previous'){go({type:'previous',records});return;}
+    if(action==='advance')go({type:'advance',records});
     if(state.stage!=='observe')return;
     if(action==='play')play();if(action==='pause')player.pause();if(action==='resume')player.resume();
   }
@@ -87,12 +97,10 @@ namespace InductionLab {
     el('flowPanel').addEventListener('change',e=>{
       const c=e.target as HTMLInputElement;if(c.dataset.member===undefined||c.disabled)return;
       records[Number(c.dataset.member)]=c.checked;
-      const next=document.querySelector<HTMLButtonElement>('[data-action="advance"]');
-      if(next)next.disabled=!allRecorded(state,records)||(state.stage==='observe'&&player.status!=='done');
+      renderNavigation();
     });
-    el('newClass').addEventListener('click',()=>el<HTMLDialogElement>('resetDialog').showModal());
-    el('cancelReset').addEventListener('click',()=>el<HTMLDialogElement>('resetDialog').close());
-    el('confirmReset').addEventListener('click',()=>{el<HTMLDialogElement>('resetDialog').close();go({type:'reset'});});
+    el('previousStep').addEventListener('click',()=>act('previous'));
+    el('nextStep').addEventListener('click',()=>act('advance'));
     document.querySelectorAll<HTMLButtonElement>('[data-camera]').forEach(b=>b.addEventListener('click',()=>{
       view=b.dataset.camera==='front'?'front':'angled';
       document.querySelectorAll<HTMLButtonElement>('[data-camera]').forEach(c=>c.setAttribute('aria-pressed',String(c===b)));draw();

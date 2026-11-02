@@ -38,6 +38,15 @@ var InductionLab;
     function renderPanel() {
         const views = { plan: () => InductionLab.pairPlanView(state, records), speed: () => InductionLab.pairSpeedView(state, records), predict: () => InductionLab.pairPredictionView(state, records), observe: () => InductionLab.pairObservationView(state, player.status, records), hypothesis: () => InductionLab.pairHypothesisView(state, records), transfer: () => InductionLab.pairTransferView(state, records), practical: () => InductionLab.pairPracticalView(state, records), judge: () => InductionLab.pairJudgmentView(state, records), finish: InductionLab.pairFinishView, history: () => '' };
         InductionLab.el('flowPanel').innerHTML = views[state.stage]();
+        renderNavigation();
+    }
+    function renderNavigation() {
+        const previous = InductionLab.el('previousStep'), next = InductionLab.el('nextStep');
+        previous.disabled = fault || state.stage === 'hypothesis';
+        next.disabled = fault || !InductionLab.canPairAdvance(state, records);
+        previous.title = state.stage === 'hypothesis' ? '첫 단계입니다.' : '확인한 기록을 유지하고 이전 단계로 이동해요.';
+        next.title = state.stage === 'history' ? '마지막 단계입니다.' : next.disabled ? '현재 단계의 관찰과 각자의 기록 확인을 마쳐 주세요.' : state.stage === 'finish' ? '패러데이와 과학의 본성 읽기로 이동해요.' : '다음 단계로 이동해요.';
+        document.querySelectorAll('#flowPanel [data-action="advance"]').forEach(b => b.disabled = next.disabled);
     }
     function render() {
         const history = state.stage === 'history';
@@ -72,7 +81,7 @@ var InductionLab;
         if (next === state)
             return;
         state = next;
-        records = Array.from({ length: state.members }, () => false);
+        records = InductionLab.pairRecords(state);
         prepare();
         render();
         window.scrollTo(0, 0);
@@ -87,7 +96,7 @@ var InductionLab;
         if (fault || state.stage !== 'observe' || !['idle', 'done'].includes(player.status))
             return;
         state = InductionLab.pairTransition(state, { type: 'replay' });
-        records = Array.from({ length: state.members }, () => false);
+        records = InductionLab.pairRecords(state);
         player.play();
     }
     function act(action) {
@@ -97,7 +106,11 @@ var InductionLab;
             go({ type: action });
             return;
         }
-        if (action === 'advance' && (state.stage !== 'observe' || player.status === 'done'))
+        if (action === 'previous') {
+            go({ type: 'previous', records });
+            return;
+        }
+        if (action === 'advance')
             go({ type: 'advance', records });
         if (state.stage !== 'observe')
             return;
@@ -143,13 +156,10 @@ var InductionLab;
             if (c.dataset.member === undefined || c.disabled)
                 return;
             records[Number(c.dataset.member)] = c.checked;
-            const next = document.querySelector('[data-action="advance"]');
-            if (next)
-                next.disabled = !InductionLab.allRecorded(state, records) || (state.stage === 'observe' && player.status !== 'done');
+            renderNavigation();
         });
-        InductionLab.el('newClass').addEventListener('click', () => InductionLab.el('resetDialog').showModal());
-        InductionLab.el('cancelReset').addEventListener('click', () => InductionLab.el('resetDialog').close());
-        InductionLab.el('confirmReset').addEventListener('click', () => { InductionLab.el('resetDialog').close(); go({ type: 'reset' }); });
+        InductionLab.el('previousStep').addEventListener('click', () => act('previous'));
+        InductionLab.el('nextStep').addEventListener('click', () => act('advance'));
         document.querySelectorAll('[data-camera]').forEach(b => b.addEventListener('click', () => {
             view = b.dataset.camera === 'front' ? 'front' : 'angled';
             document.querySelectorAll('[data-camera]').forEach(c => c.setAttribute('aria-pressed', String(c === b)));

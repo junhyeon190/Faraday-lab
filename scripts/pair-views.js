@@ -20,12 +20,13 @@ var InductionLab;
     }
     InductionLab.pairPredictionView = pairPredictionView;
     function pairObservationView(state, status, records) {
-        const i = state.condition, done = status === 'done', op = InductionLab.pairOperator(state);
+        const i = state.condition, done = state.observed[i], op = InductionLab.pairOperator(state);
         const control = status === 'running' ? InductionLab.actionButton('pause', '재생 잠시 멈추기', 'secondary') : status === 'paused' ? InductionLab.actionButton('resume', '이어서 관찰하기') : InductionLab.actionButton('play', done ? '같은 조건 다시 보기' : '이 조건 관찰하기');
         return `${progress(`학습지 2쪽 B · 조건 ${i + 1}/3`, InductionLab.PAIR_CONDITIONS[i])}
       <div class="role-strip">조작: 짝 ${op} · 함께 바늘 관찰</div>
       <p>${i === 0 ? '두 기구를 그대로 두고, 안정된 뒤를 관찰해요.' : '자석이 움직이는 동안과 멈춘 뒤를 이어서 살펴보세요.'}</p>
       <div class="run-buttons">${control}</div>
+      ${done && status === 'idle' ? '<p class="notice">이 조건의 관찰을 마쳤어요. 확인한 기록은 유지되며, 다시 보기를 누를 때만 결과가 재생돼요.</p>' : ''}
       ${status === 'paused' ? '<p class="notice">화면 재생만 멈췄어요. 실제 자석을 정지시킨 조건과 달라요.</p>' : ''}
       ${i === 1 && status === 'idle' ? '<p class="paper-note">자석을 먼 시작 위치로 준비했어요. 준비 이동은 관찰에 넣지 않아요.</p>' : ''}
       ${prompt(done ? 'B의 ‘가상 관찰’에 각자 기록' : '각자 기록할 준비', '○ / × / ?로 적고 짝과 비교해요. 다르게 보았다면 다시 관찰해요. 처음 예측은 지우지 않아요.')}
