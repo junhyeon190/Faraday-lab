@@ -7,6 +7,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .pair-page .member-select{flex-wrap:wrap}
 .pair-page .pair-checks{grid-template-columns:repeat(auto-fit,minmax(min(100%,144px),1fr))}
 .pair-page .role-table{table-layout:fixed}
+.pair-page .role-table caption,.pair-page .role-table th,.pair-page .role-table td{text-align:center;vertical-align:middle}
 .pair-page .role-table th,.pair-page .role-table td{white-space:normal;word-break:keep-all;overflow-wrap:break-word}
 .pair-page .role-table th:nth-child(odd){width:30%}
 .pair-page .role-table th:nth-child(even){width:20%}
