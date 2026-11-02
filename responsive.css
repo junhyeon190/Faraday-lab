@@ -1,0 +1,80 @@
+/* 글자 자동 확대만 일정하게 하고, 사용자의 화면 확대는 허용한다. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.pair-page{word-break:keep-all;overflow-wrap:break-word}
+.pair-page .brand,.pair-page .brand>div,.pair-page .bench-heading>div{min-width:0}
+.pair-page .bench-heading h2{line-height:1.4;word-break:keep-all}
+.pair-page .equipment-label{width:max-content;max-width:calc(100% - 16px)}
+.pair-page .member-select{flex-wrap:wrap}
+.pair-page .pair-checks{grid-template-columns:repeat(auto-fit,minmax(min(100%,144px),1fr))}
+.pair-page .role-table{table-layout:fixed}
+.pair-page .role-table th,.pair-page .role-table td{white-space:normal;word-break:keep-all;overflow-wrap:break-word}
+.pair-page .role-table th:nth-child(odd){width:30%}
+.pair-page .role-table th:nth-child(even){width:20%}
+.pair-page .history-section summary>span:not(.history-number):not(.history-expand){min-width:0}
+.pair-page .history-section summary{overflow-wrap:anywhere}
+.pair-page .history-body{overflow-wrap:anywhere}
+
+/* 휴대폰과 태블릿 세로 화면에서는 안내를 그림 아래에서 읽는다. */
+@media(max-width:1100px){
+  .pair-page .topbar{height:auto;min-height:104px;padding:16px 20px;gap:16px;flex-wrap:wrap}
+  .pair-page .experiment-layout{grid-template-columns:minmax(0,1fr)}
+  .pair-page .flow-guide{max-height:none;overflow:visible;scrollbar-gutter:auto}
+  .pair-page .experiment-layout .viewport{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;height:auto;min-height:0;flex:none;padding-bottom:12px}
+  .pair-page #experimentCanvas{position:relative;inset:auto;grid-row:3;width:100%;height:clamp(220px,67vw,420px);touch-action:pan-y pinch-zoom}
+  .pair-page .view-controls{position:static;grid-row:1;justify-self:start;margin:12px 12px 0;max-width:calc(100% - 24px);box-shadow:none}
+  .pair-page .view-controls button{min-height:44px;padding:0 12px}
+  .pair-page .motion-phase{position:static;grid-row:2;justify-self:start;margin:0 12px;max-width:calc(100% - 24px);padding:8px 12px;line-height:1.4}
+  .pair-page #magnetLabel{position:static;grid-row:4;transform:none;justify-self:stretch;width:auto;max-width:none;margin:0 12px;padding:8px 12px;white-space:pre-line;line-height:1.5}
+  .pair-page .experiment-layout .bench-caption{position:static;grid-row:5;transform:none;justify-self:stretch;width:auto;max-width:none;margin:0 12px;padding:8px 12px;line-height:1.5;white-space:normal}
+  .pair-page .instrument{height:auto;min-height:120px;padding:12px}
+  .pair-page .instrument-lock{min-height:96px;padding:16px}
+  .pair-page .instrument #instrumentReadout{height:auto;min-height:140px;grid-template-columns:150px minmax(0,1fr);gap:14px}
+  .pair-page .instrument #gauge{height:130px}
+  .pair-page .instrument #trace{min-height:70px}
+  .pair-page .trace-heading{flex-wrap:wrap}
+  .pair-page .trace-note{line-height:1.5}
+}
+
+@media(max-width:600px){
+  .pair-page .topbar{padding:16px;gap:14px}
+  .pair-page .brand{flex:1 1 100%}
+  .pair-page .brand .eyebrow{line-height:1.5;letter-spacing:0}
+  .pair-page .topic-lead{font-size:16px;line-height:1.5}
+  .pair-page .topic-main{font-size:clamp(22px,6vw,26px);line-height:1.4}
+  .pair-page .header-actions{width:100%;margin:0;gap:10px}
+  .pair-page .header-actions button{flex:1;min-width:0;min-height:48px;padding:10px 6px;font-size:16px}
+  .pair-page .experiment-layout{padding:12px;gap:16px}
+  .pair-page .experiment-layout .bench-heading{flex-wrap:wrap;gap:10px;padding:16px}
+  .pair-page .bench-heading>div{flex:1 1 100%}
+  .pair-page .bench-heading h2{font-size:clamp(20px,5.5vw,24px)}
+  .pair-page .bench-heading .eyebrow{line-height:1.5;letter-spacing:0}
+  .pair-page .stage-badge{padding:6px 10px}
+  .pair-page .flow-guide{padding:16px}
+  .pair-page .flow-guide h2{font-size:22px;line-height:1.45}
+  .pair-page .flow-guide p,.pair-page .practical-rules,.pair-page .paper-conditions{line-height:1.65}
+  .pair-page .condition-cards li{flex-wrap:wrap}
+  .pair-page .paper-check{min-height:48px}
+  .pair-page .instrument #instrumentReadout{grid-template-columns:minmax(0,1fr);gap:8px}
+  .pair-page .instrument #gauge{height:120px;max-height:none}
+  .pair-page .trace-heading{flex-direction:row}
+  .pair-page .instrument #trace{height:80px;flex:auto}
+  .pair-page .role-table{line-height:1.55}
+  .pair-page .role-table th,.pair-page .role-table td{padding:8px 5px}
+  .pair-page .role-table caption{line-height:1.6;margin-bottom:8px}
+  .pair-page .history-layout{padding:16px 12px 0}
+  .pair-page .history-hero,.pair-page .history-core,.pair-page .history-class-link{padding:20px}
+  .pair-page .history-hero h2{font-size:26px}
+  .pair-page .history-reading{padding:20px 12px}
+  .pair-page .history-body{padding:18px 14px;font-size:16px}
+  .pair-page .history-section summary{gap:8px;padding:14px 10px}
+  .pair-page .history-number{width:28px;flex-basis:28px;font-size:22px}
+  .pair-page .history-section summary strong{font-size:18px}
+  .pair-page .history-note{padding:14px}
+  .pair-page .history-bottom button{max-width:100%;white-space:normal}
+  .pair-page footer{padding:0 16px 20px;line-height:1.6;overflow-wrap:anywhere}
+}
+
+/* 가로로 돌린 휴대폰에서도 페이지를 세로로 스크롤할 수 있게 한다. */
+@media(max-width:1100px) and (max-height:500px){
+  .pair-page #experimentCanvas{height:280px}
+}

@@ -13,7 +13,31 @@ var InductionLab;
         draw();
     });
     function readingVisible() { return !fault && state.stage === 'observe' && player.status !== 'idle'; }
-    function position(id, p, dy = 0) { const xy = scene.renderer.project(p); InductionLab.el(id).style.left = `${xy.x}px`; InductionLab.el(id).style.top = `${xy.y + dy}px`; }
+    function position(id, p, dy = 0) {
+        const label = InductionLab.el(id);
+        if (getComputedStyle(label).position !== 'absolute')
+            return;
+        // 작은 화면의 도구 줄 높이와 관계없이 그림 안에서 이름표를 배치한다.
+        const xy = scene.renderer.project(p), half = label.offsetWidth / 2, padding = 8;
+        const x = Math.max(half + padding, Math.min(canvas.clientWidth - half - padding, xy.x));
+        const y = Math.max(label.offsetHeight + padding, Math.min(canvas.clientHeight - padding, xy.y + dy));
+        const left = canvas.offsetLeft + x;
+        let bottom = canvas.offsetTop + y;
+        // 두 열 배치에서도 위쪽 보기 버튼·관찰 상태와 이름표가 겹치지 않게 한다.
+        if (id === 'magnetLabel') {
+            const viewport = InductionLab.el('experimentViewport').getBoundingClientRect();
+            document.querySelectorAll('.view-controls,#motionPhase').forEach(obstacle => {
+                if (obstacle.hidden)
+                    return;
+                const box = obstacle.getBoundingClientRect();
+                if (left + half > box.left - viewport.left && left - half < box.right - viewport.left && bottom > box.top - viewport.top && bottom - label.offsetHeight < box.bottom - viewport.top) {
+                    bottom = Math.min(canvas.offsetTop + canvas.clientHeight - padding, box.bottom - viewport.top + label.offsetHeight + padding);
+                }
+            });
+        }
+        label.style.left = `${left}px`;
+        label.style.top = `${bottom}px`;
+    }
     function draw() {
         if (fault || !scene || state.stage === 'history')
             return;
@@ -22,10 +46,7 @@ var InductionLab;
         const show = readingVisible();
         scene.draw(apparatus, frame, mode, view, show);
         const x = scene.axis(mode);
-        position('magnetLabel', [x + .93, frame.magnetY + .72, 0], -5);
         InductionLab.el('magnetLabel').textContent = `자석 · ${actual ? '집게로 고정' : '손으로 잡음'}\n위 남극 / 아래 북극`;
-        position('coilLabel', [x, frame.coilY, 0], 48);
-        position('meterLabel', [2.5, 1.05, .5], -5);
         InductionLab.el('instrumentLock').hidden = show;
         InductionLab.el('instrumentReadout').hidden = !show;
         if (show)
@@ -34,6 +55,9 @@ var InductionLab;
         InductionLab.el('motionPhase').textContent = player.status === 'idle' ? '관찰 준비' : player.status === 'paused' ? '재생 일시 정지' : state.condition === 0 ? '두 기구 정지 · 관찰 중' : frame.time >= 3 ? '자석을 멈춘 뒤 · 관찰 중' : '자석을 움직이는 동안';
         if (state.stage === 'observe' && player.status === 'done')
             InductionLab.el('motionPhase').textContent = '관찰 완료 · 각자 B에 기록';
+        position('magnetLabel', [x + .93, frame.magnetY + .72, 0], -5);
+        position('coilLabel', [x, frame.coilY, 0], 48);
+        position('meterLabel', [2.5, 1.05, .5], -5);
     }
     function renderPanel() {
         const views = { plan: () => InductionLab.pairPlanView(state, records), speed: () => InductionLab.pairSpeedView(state, records), predict: () => InductionLab.pairPredictionView(state, records), observe: () => InductionLab.pairObservationView(state, player.status, records), hypothesis: () => InductionLab.pairHypothesisView(state, records), transfer: () => InductionLab.pairTransferView(state, records), practical: () => InductionLab.pairPracticalView(state, records), judge: () => InductionLab.pairJudgmentView(state, records), finish: InductionLab.pairFinishView, history: () => '' };
@@ -60,7 +84,7 @@ var InductionLab;
         InductionLab.el('modeLabel').textContent = labels[state.stage];
         InductionLab.el('experimentBadge').textContent = state.stage === 'observe' ? `${state.condition + 1} / 3 조건` : `${state.members}명 함께`;
         InductionLab.el('instrumentLock').textContent = state.stage === 'predict' ? '각자 B의 세 예측을 먼저 기록해요.' : state.stage === 'observe' ? '‘이 조건 관찰하기’를 누르면 검류계를 볼 수 있어요.' : state.stage === 'hypothesis' ? 'A에 가설과 까닭을 먼저 기록해요.' : state.stage === 'plan' ? 'C에 예측과 비교 계획을 먼저 기록해요.' : '실제 장치의 바늘 반응은 E에 새로 기록해요.';
-        InductionLab.el('experimentHint').textContent = state.stage === 'observe' ? '같은 극·기울기·직선 경로 · 오른쪽 버튼으로 관찰' : state.stage === 'speed' ? '코일 고정 · 같은 구간에서 자석 넣기' : state.stage === 'transfer' || state.stage === 'practical' ? '④~⑥ 자석 고정 배치 예시 · ①~③은 코일 고정' : '전지 없는 회로 · 같은 자석과 코일';
+        InductionLab.el('experimentHint').textContent = state.stage === 'observe' ? '같은 극·기울기·직선 경로 · 관찰하기 버튼으로 관찰' : state.stage === 'speed' ? '코일 고정 · 같은 구간에서 자석 넣기' : state.stage === 'transfer' || state.stage === 'practical' ? '④~⑥ 자석 고정 배치 예시 · ①~③은 코일 고정' : '전지 없는 회로 · 같은 자석과 코일';
         const nav = ['finish', 'history'].includes(state.stage) ? 'history' : ['transfer', 'practical', 'speed', 'judge'].includes(state.stage) ? 'transfer' : state.stage === 'plan' ? 'predict' : state.stage;
         document.querySelectorAll('[data-phase]').forEach(x => { if (x.dataset.phase === nav)
             x.setAttribute('aria-current', 'step');
@@ -98,6 +122,9 @@ var InductionLab;
         state = InductionLab.pairTransition(state, { type: 'replay' });
         records = InductionLab.pairRecords(state);
         player.play();
+        // 세로 배치에서는 아래쪽 버튼을 누른 뒤 장치와 검류계를 바로 볼 수 있게 한다.
+        if (matchMedia('(max-width:1100px)').matches)
+            canvas.scrollIntoView({ block: 'start', behavior: 'auto' });
     }
     function act(action) {
         if (fault)
@@ -166,7 +193,11 @@ var InductionLab;
             draw();
         }));
         InductionLab.bindExperimentGesture(canvas, () => scene.renderer.project([scene.axis('magnet'), frame.magnetY, 0]), () => !fault && state.stage === 'observe' && state.condition > 0 && (player.status === 'idle' || player.status === 'done'), play);
-        new ResizeObserver(draw).observe(InductionLab.el('experimentViewport'));
+        const resize = new ResizeObserver(draw);
+        resize.observe(InductionLab.el('experimentViewport'));
+        resize.observe(canvas);
+        // 서체가 준비된 뒤에도 실제 글자 폭으로 이름표 위치를 다시 맞춘다.
+        document.fonts.ready.then(draw);
         document.addEventListener('visibilitychange', () => { if (document.hidden)
             player.pause(); });
         // 돌아왔을 때 이전 모형 결과가 먼저 보이지 않게 한다.

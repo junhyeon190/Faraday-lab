@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; connect-src 'none'; img-src 'self' file: data:; font-src 'self' file:; style-src 'self' file: 'unsafe-inline'; script-src 'self' file:; object-src 'none'; base-uri 'none'">
 <title>과학사와 실험으로 탐구하는 전자기 유도의 발견</title>
-<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="experiment.css"><link rel="stylesheet" href="pair.css"><link rel="stylesheet" href="history.css">
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="experiment.css"><link rel="stylesheet" href="pair.css"><link rel="stylesheet" href="history.css"><link rel="stylesheet" href="responsive.css?v=20261102-mobile">
 <script defer src="scripts/types.js"></script>
 <script defer src="scripts/math.js"></script>
 <script defer src="scripts/geometry.js"></script>
@@ -22,7 +22,7 @@
 <script defer src="scripts/pair-views.js"></script>
 <script defer src="scripts/pair-practical.js"></script>
 <script defer src="scripts/pair-history.js"></script>
-<script defer src="scripts/pair-app.js"></script>
+<script defer src="scripts/pair-app.js?v=20261102-mobile"></script>
 </head>
 <body class="experiment-page pair-page">
 <header class="topbar"><div class="brand"><span class="brand-icon" aria-hidden="true">∩</span><div><span class="eyebrow">상모고 과학 실험실 · 짝 탐구</span><h1><span class="topic-lead">과학사와 실험으로 탐구하는 </span><span class="topic-main">전자기 유도의 발견</span></h1></div></div><nav class="journey" aria-label="수업 순서"><span data-phase="hypothesis">① 첫 가설</span><span data-phase="predict">② 예측·계획</span><span data-phase="observe">③ 가상 관찰</span><span data-phase="transfer">④ 실제 검증</span><span data-phase="history">⑤ 과학사 정리</span></nav><div class="header-actions"><button id="previousStep" class="secondary" type="button" disabled>← 이전 단계</button><button id="nextStep" class="primary" type="button" disabled>다음 단계 →</button></div></header>
@@ -36,7 +36,7 @@
 <div id="experimentLoading" class="loading" role="status">실험 장치를 준비하고 있어요.</div>
 <div id="experimentError" class="error-box" role="alert" hidden><strong>실험 화면을 열 수 없습니다.</strong><p id="experimentErrorText"></p><a href="index.html" class="continue-lab">다시 열기</a></div>
 <div id="experimentHint" class="bench-caption">코일은 고정하고 자석의 상태를 비교해요.</div></div>
-<section class="instrument" aria-label="검류계 관찰"><div id="instrumentLock" class="instrument-lock">종이에 가설과 예측을 쓴 뒤 관찰합니다.</div><div id="instrumentReadout" hidden><svg id="gauge" viewBox="0 0 230 110" role="img" aria-label="검류계 바늘"><path d="M25 87 A90 90 0 0 1 205 87" fill="none" stroke="#51655c" stroke-width="2"/><path d="M25 87h10 M115 4v12 M195 87h10" stroke="#51655c" stroke-width="2"/><text x="115" y="32" text-anchor="middle">0</text><line id="gaugeNeedle" x1="115" y1="94" x2="115" y2="20" stroke="#a12f35" stroke-width="4"/><circle cx="115" cy="94" r="6" fill="#294237"/></svg><div class="trace-area"><div class="trace-heading"><strong>바늘의 움직임</strong><span id="playStatus">관찰 전</span></div><svg id="trace" viewBox="0 0 460 100" preserveAspectRatio="none" role="img" aria-label="시간에 따른 바늘 움직임"><path d="M0 50H460" stroke="#b5c2b8" stroke-dasharray="4 4"/><polyline id="traceLine" fill="none" stroke="#a12f35" stroke-width="2.5" points=""/></svg><span class="trace-note">시간 → · 눈금은 상대적인 바늘 변위</span></div></div></section>
+<section class="instrument" aria-label="검류계 관찰"><div id="instrumentLock" class="instrument-lock">종이에 가설과 예측을 쓴 뒤 관찰합니다.</div><div id="instrumentReadout" hidden><svg id="gauge" viewBox="0 -10 230 120" role="img" aria-label="검류계 바늘"><path d="M25 87 A90 90 0 0 1 205 87" fill="none" stroke="#51655c" stroke-width="2"/><path d="M25 87h10 M115 4v12 M195 87h10" stroke="#51655c" stroke-width="2"/><text x="115" y="32" text-anchor="middle">0</text><line id="gaugeNeedle" x1="115" y1="94" x2="115" y2="20" stroke="#a12f35" stroke-width="4"/><circle cx="115" cy="94" r="6" fill="#294237"/></svg><div class="trace-area"><div class="trace-heading"><strong>바늘의 움직임</strong><span id="playStatus">관찰 전</span></div><svg id="trace" viewBox="0 0 460 100" preserveAspectRatio="none" role="img" aria-label="시간에 따른 바늘 움직임"><path d="M0 50H460" stroke="#b5c2b8" stroke-dasharray="4 4"/><polyline id="traceLine" fill="none" stroke="#a12f35" stroke-width="2.5" points=""/></svg><span class="trace-note">시간 → · 눈금은 상대적인 바늘 변위</span></div></div></section>
 </section>
 <aside class="flow-guide"><div id="flowPanel" tabindex="-1"><h2>종이 예측 안내</h2><p>실험 장치를 준비하고 있습니다.</p></div></aside>
 </main>
