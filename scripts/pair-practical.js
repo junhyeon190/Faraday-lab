@@ -13,7 +13,7 @@ var InductionLab;
     InductionLab.pairPracticalView = pairPracticalView;
     function pairSpeedView(state, records) {
         return `<span class="eyebrow">학습지 3쪽 E-2 · 약 4분</span><h2>이번에는 빠르기만 바꿔요</h2>
-      <p>코일은 고정해요. C의 예측을 보고 같은 N극을 같은 구간에서 넣어요.</p>
+      <p>코일은 고정해요. 같은 N극을 같은 구간에서 넣고 빠르기만 바꿔요.</p>
       <table class="role-table"><thead><tr><th>비교할 조건</th><th>같게 둘 것</th></tr></thead><tbody><tr><td>⑦ 느리게 넣기</td><td rowspan="2">자석·코일·연결<br>극·경로·시작과 끝</td></tr><tr><td>⑧ 빠르게 넣기</td></tr></tbody></table>
       <ol class="practical-rules"><li>바늘이 가장 크게 흔들린 폭을 비교해요.</li><li>⑦·⑧ 한 쌍을 관찰한 뒤 교대해요.</li><li>두 번째 비교도 같은 방법으로 해요.</li></ol>
       <p class="paper-note">다시 빼는 준비 동작은 비교에서 제외해요. 실제로 보인 결과를 E-2에 표시해요.</p>

@@ -1,7 +1,7 @@
 "use strict";
 var InductionLab;
 (function (InductionLab) {
-    InductionLab.PAIR_STEPS = ['hypothesis', 'predict', 'plan', 'observe0', 'observe1', 'observe2', 'transfer', 'practical', 'speed', 'judge', 'finish', 'history'];
+    InductionLab.PAIR_STEPS = ['hypothesis', 'predict', 'observe0', 'observe1', 'observe2', 'transfer', 'practical', 'speed', 'judge', 'finish', 'history'];
     InductionLab.PAIR_CONDITIONS = ['① 가까이에 정지', '② 가까워지는 동안', '③ 멀어지는 동안'];
     function freshPair() { return { stage: 'hypothesis', members: 2, condition: 0, observed: [false, false, false], confirmations: {} }; }
     InductionLab.freshPair = freshPair;

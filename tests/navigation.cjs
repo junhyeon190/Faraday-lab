@@ -37,7 +37,8 @@ for(const count of [2,3]){
  state=L.pairTransition(state,{type:'members',count:count===2?3:2});
  check('인원 변경 시 기존 확인 재사용 차단',()=>assert.equal(L.pairRecords(state).some(Boolean),false));
  check('인원 변경 시 관찰 상태 초기화',()=>assert.equal(state.observed.some(Boolean),false));
- for(let i=0;i<3;i++)state=L.pairTransition(state,{type:'advance',records:Array(state.members).fill(true)});
+ for(let i=0;i<2;i++)state=L.pairTransition(state,{type:'advance',records:Array(state.members).fill(true)});
+ check('B 예측에서 C 없이 첫 가상 관찰로 이동',()=>assert.equal(L.pairStep(state),'observe0'));
  state=L.pairTransition(state,{type:'observed'});
  state=L.pairTransition(state,{type:'advance',records:Array(state.members).fill(true)});
  state=L.pairTransition(state,{type:'previous',records:Array(state.members).fill(false)});

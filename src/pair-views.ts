@@ -12,7 +12,7 @@ namespace InductionLab {
       <ol class="condition-cards">${PAIR_CONDITIONS.map(c=>`<li><strong>${c}</strong><span>코일은 고정</span></li>`).join('')}</ol>
       <p class="legend">○ 반응 있음 · × 보지 못함<br>? 모르거나 판단 어려움</p>
       ${memberChecks(state,'각자 세 칸을 모두 쓴 뒤, 자기 번호를 눌러요.',records)}
-      ${nextButton('B 기록 완료 · 실험 계획으로',allRecorded(state,records))}
+      ${nextButton('B 예측 완료 · 가상 관찰로',allRecorded(state,records))}
       <p class="paper-note">서로 다른 예측도 그대로 남겨요. 정지는 바늘이 안정된 뒤를 뜻해요.</p>`;
   }
   export function pairObservationView(state:PairState,status:PlaybackStatus,records:boolean[]):string{
@@ -37,15 +37,6 @@ namespace InductionLab {
       <p class="paper-note">조건과 까닭을 각자 쓰고 짝에게 설명해요. 서로 다른 가설도 그대로 남겨요.</p>
       ${memberChecks(state,'가설과 까닭을 쓰고 서로 설명했나요?',records)}
       ${nextButton('A 기록 완료 · 내 가설로 예측',allRecorded(state,records))}`;
-  }
-  export function pairPlanView(state:PairState,records:boolean[]):string{
-    return `${progress('학습지 2쪽 C · 약 2분','무엇을 비교해 볼까요?')}
-      <p>A의 가설대로라면 자석을 고정하고 코일을 움직일 때는 어떨까요?</p>
-      <ol class="condition-cards"><li><strong>④ 코일도 정지</strong></li><li><strong>⑤ 코일이 가까워짐</strong></li><li><strong>⑥ 코일이 멀어짐</strong></li></ol>
-      ${prompt('빠르기 비교도 먼저 예상해요','같은 자석을 같은 구간에서 느리게·빠르게 넣으면, 바늘이 가장 크게 흔들린 폭은 어떨까요?')}
-      <p>같게 둘 조건 한 가지도 C에 적어요.</p>
-      ${memberChecks(state,'C의 예측과 비교 계획을 각자 기록했나요?',records)}
-      ${nextButton('계획 완료 · 세 조건 가상 관찰',allRecorded(state,records))}`;
   }
   export function pairTransferView(state:PairState,records:boolean[]):string{
     return `${progress('학습지 3쪽 D · 약 2분','처음 가설을 실제로 검증해요')}

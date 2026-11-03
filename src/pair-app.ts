@@ -43,7 +43,7 @@ namespace InductionLab {
     position('coilLabel',[x,frame.coilY,0],48);position('meterLabel',[2.5,1.05,.5],-5);
   }
   function renderPanel():void{
-    const views:Record<PairStage,()=>string>={plan:()=>pairPlanView(state,records),speed:()=>pairSpeedView(state,records),predict:()=>pairPredictionView(state,records),observe:()=>pairObservationView(state,player.status,records),hypothesis:()=>pairHypothesisView(state,records),transfer:()=>pairTransferView(state,records),practical:()=>pairPracticalView(state,records),judge:()=>pairJudgmentView(state,records),finish:pairFinishView,history:()=>''};
+    const views:Record<PairStage,()=>string>={speed:()=>pairSpeedView(state,records),predict:()=>pairPredictionView(state,records),observe:()=>pairObservationView(state,player.status,records),hypothesis:()=>pairHypothesisView(state,records),transfer:()=>pairTransferView(state,records),practical:()=>pairPracticalView(state,records),judge:()=>pairJudgmentView(state,records),finish:pairFinishView,history:()=>''};
     el('flowPanel').innerHTML=views[state.stage]();
     renderNavigation();
   }
@@ -60,13 +60,13 @@ namespace InductionLab {
     el('experimentLayout').hidden=history;el('historyReader').hidden=!history;
     el('historyReader').innerHTML=history?pairHistoryView():'';
     renderPanel();
-    const titles:Record<PairStage,string>={plan:'같은 가설로 실제 조건 예상하기',speed:'같은 구간 · 느리게와 빠르게 비교',predict:'코일은 고정 · 자석의 세 조건',observe:'코일은 고정 · 자석의 상태 바꾸기',hypothesis:'외르스테드의 발견에서 새로운 질문으로',transfer:'실제 장치 연결·역할 확인',practical:'교실의 장치로 직접 확인하기',judge:'실제 관찰로 내 가설 판단하기',finish:'기록을 가지고 전체 수업으로',history:'패러데이와 과학의 본성'};
-    const labels:Record<PairStage,string>={plan:'2.2 C · 비교 계획',speed:'2.4 E-2 · 빠르기 비교',predict:'2.2 B · 나의 예측',observe:'2.3 B · 짝과 가상 관찰',hypothesis:'2.1 A · 첫 가설',transfer:'2.4 D · 실제 장치 준비',practical:'2.4 E · 실제 실험',judge:'2.5 F · 가설 판단',finish:'3 · 정리로 연결',history:'3 · 과학사로 정리'};
+    const titles:Record<PairStage,string>={speed:'같은 구간 · 느리게와 빠르게 비교',predict:'코일은 고정 · 자석의 세 조건',observe:'코일은 고정 · 자석의 상태 바꾸기',hypothesis:'외르스테드의 발견에서 새로운 질문으로',transfer:'실제 장치 연결·역할 확인',practical:'교실의 장치로 직접 확인하기',judge:'실제 관찰로 내 가설 판단하기',finish:'기록을 가지고 전체 수업으로',history:'패러데이와 과학의 본성'};
+    const labels:Record<PairStage,string>={speed:'2.4 E-2 · 빠르기 비교',predict:'2.2 B · 나의 예측',observe:'2.3 B · 짝과 가상 관찰',hypothesis:'2.1 A · 첫 가설',transfer:'2.4 D · 실제 장치 준비',practical:'2.4 E · 실제 실험',judge:'2.5 F · 가설 판단',finish:'3 · 정리로 연결',history:'3 · 과학사로 정리'};
     el('experimentTitle').textContent=titles[state.stage];el('modeLabel').textContent=labels[state.stage];
     el('experimentBadge').textContent=state.stage==='observe'?`${state.condition+1} / 3 조건`:`${state.members}명 함께`;
-    el('instrumentLock').textContent=state.stage==='predict'?'각자 B의 세 예측을 먼저 기록해요.':state.stage==='observe'?'‘이 조건 관찰하기’를 누르면 검류계를 볼 수 있어요.':state.stage==='hypothesis'?'A에 가설과 까닭을 먼저 기록해요.':state.stage==='plan'?'C에 예측과 비교 계획을 먼저 기록해요.':'실제 장치의 바늘 반응은 E에 새로 기록해요.';
+    el('instrumentLock').textContent=state.stage==='predict'?'각자 B의 세 예측을 먼저 기록해요.':state.stage==='observe'?'‘이 조건 관찰하기’를 누르면 검류계를 볼 수 있어요.':state.stage==='hypothesis'?'A에 가설과 까닭을 먼저 기록해요.':'실제 장치의 바늘 반응은 E에 새로 기록해요.';
     el('experimentHint').textContent=state.stage==='observe'?'같은 극·기울기·직선 경로 · 관찰하기 버튼으로 관찰':state.stage==='speed'?'코일 고정 · 같은 구간에서 자석 넣기':state.stage==='transfer'||state.stage==='practical'?'④~⑥ 자석 고정 배치 예시 · ①~③은 코일 고정':'전지 없는 회로 · 같은 자석과 코일';
-    const nav=['finish','history'].includes(state.stage)?'history':['transfer','practical','speed','judge'].includes(state.stage)?'transfer':state.stage==='plan'?'predict':state.stage;
+    const nav=['finish','history'].includes(state.stage)?'history':['transfer','practical','speed','judge'].includes(state.stage)?'transfer':state.stage;
     document.querySelectorAll<HTMLElement>('[data-phase]').forEach(x=>{if(x.dataset.phase===nav)x.setAttribute('aria-current','step');else x.removeAttribute('aria-current');});
     draw();
   }

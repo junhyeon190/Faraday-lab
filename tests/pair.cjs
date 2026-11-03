@@ -7,7 +7,7 @@ for(const count of [2,3]){
  let s=L.pairTransition(L.freshPair(),{type:'members',count});const full=Array(count).fill(true),partial=Array(count).fill(false);partial[0]=true;
  check(`${count}인 첫 화면 과학사 우회 차단`,()=>assert.equal(L.pairTransition(s,{type:'history'}),s));
  check(`${count}인 가설 미완료 차단`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:partial}),s));
- for(const stage of ['predict','plan','observe']){
+ for(const stage of ['predict','observe']){
   check(`${count}인 ${s.stage} 과학사 우회 차단`,()=>assert.equal(L.pairTransition(s,{type:'history'}),s));
   check(`${count}인 ${stage} 전 미완료 차단`,()=>assert.equal(L.pairTransition(s,{type:'advance',records:partial}),s));
   s=L.pairTransition(s,{type:'advance',records:full});

@@ -1,9 +1,9 @@
 namespace InductionLab {
-  export type PairStage='predict'|'observe'|'hypothesis'|'plan'|'transfer'|'practical'|'speed'|'judge'|'finish'|'history';
+  export type PairStage='predict'|'observe'|'hypothesis'|'transfer'|'practical'|'speed'|'judge'|'finish'|'history';
   export type PairStep=Exclude<PairStage,'observe'>|'observe0'|'observe1'|'observe2';
   export interface PairState {stage:PairStage;members:2|3;condition:number;observed:boolean[];confirmations:Partial<Record<PairStep,boolean[]>>;}
   export type PairAction={type:'members';count:2|3}|{type:'advance'|'previous';records:boolean[]}|{type:'observed'}|{type:'replay'}|{type:'reset'}|{type:'history'}|{type:'return'};
-  export const PAIR_STEPS:readonly PairStep[]=['hypothesis','predict','plan','observe0','observe1','observe2','transfer','practical','speed','judge','finish','history'];
+  export const PAIR_STEPS:readonly PairStep[]=['hypothesis','predict','observe0','observe1','observe2','transfer','practical','speed','judge','finish','history'];
   export const PAIR_CONDITIONS=['① 가까이에 정지','② 가까워지는 동안','③ 멀어지는 동안'];
   export function freshPair():PairState{return {stage:'hypothesis',members:2,condition:0,observed:[false,false,false],confirmations:{}};}
   export function pairStep(state:PairState):PairStep{return state.stage==='observe'?(['observe0','observe1','observe2'] as const)[state.condition]:state.stage;}
